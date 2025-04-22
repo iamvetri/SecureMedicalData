@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Medical Image Encryption Portal</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+  <style>
+    body {
+      background: linear-gradient(to bottom, #ffffff, #000c2c);
+      color: white;
+      font-family: 'Outfit', sans-serif;
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    video {
+      position: fixed;
+      right: 0;
+      bottom: 0;
+      min-width: 100%;
+      min-height: 100%;
+      z-index: -1;
+      filter: brightness(0.3);
+    }
+
+    .main {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      gap: 3rem;
+    }
+
+    .left, .right {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 2rem;
+      border-radius: 20px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.5);
+    }
+
+    .left {
+      max-width: 400px;
+      text-align: center;
+      animation: fadeInUp 1s ease-in-out;
+    }
+
+    .right {
+      display: none;
+      animation: fadeInRight 1s ease-in-out;
+    }
+
+    .right.show {
+      display: block;
+    }
+
+    .right img {
+      max-width: 300px;
+      border-radius: 15px;
+      box-shadow: 0 0 12px rgba(255,255,255,0.3);
+      transition: transform 0.3s ease;
+    }
+
+    .right img:hover {
+      transform: scale(1.05);
+    }
+
+    h1 {
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+      background: linear-gradient(to right, #ffffff, #00A8E8, #1B1464);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    form {
+      margin-top: 1rem;
+    }
+
+    input[type="file"] {
+      margin-bottom: 1rem;
+      padding: 0.5rem;
+      border-radius: 10px;
+      border: none;
+      background: rgba(255, 255, 255, 0.15);
+      color: white;
+      width: 100%;
+    }
+
+    button, a.button-link {
+      padding: 10px 20px;
+      border-radius: 12px;
+      border: none;
+      background: linear-gradient(135deg, #ffffff, #00A8E8);
+      color: #000c2c;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      display: inline-block;
+      margin: 0.5rem;
+      text-decoration: none;
+    }
+
+    button:hover, a.button-link:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 10px #63e0ff;
+    }
+
+    .logo {
+      height: 60px;
+      margin-bottom: 1rem;
+      animation: pulse 2s infinite;
+    }
+  </style>
+</head>
+<body>
+<video autoplay muted loop>
+  <source src="{{ url_for('static', filename='dna_background.mp4') }}" type="video/mp4">
+</video>
+
+<div class="main" id="mainBox">
+  <div class="left animate__animated animate__fadeInLeft" id="leftBox">
+    <img src="{{ url_for('static', filename='Shanmugha_Arts,_Science,_Technology_&_Research_Academy.svg.png') }}" class="logo" alt="SASTRA Logo">
+    <h1>Welcome, {{ username }} ({{ role }})</h1>
+
+    {% if role == 'Doctor' or role == 'Admin' %}
+    <form method="POST" enctype="multipart/form-data">
+      <input type="file" name="image" accept="image/*" onchange="previewImage(event)" required>
+      <button type="submit">Encrypt Image</button>
+    </form>
+    {% endif %}
+
+    {% if role == 'Admin' or role == 'Researcher' %}
+    <a href="/decrypt" class="button-link">Decrypt Image</a>
+    {% endif %}
+
+    <p><a href="/logout" style="color:#00d8ff;text-decoration:none;">Logout</a></p>
+  </div>
+
+  <div class="right animate__animated animate__fadeInRight" id="previewBox">
+    <img id="preview" src="{{ url_for('static', filename='placeholder.png') }}" alt="Preview Image">
+  </div>
+</div>
+
+<script>
+  function previewImage(event) {
+    const previewBox = document.getElementById('previewBox');
+    const preview = document.getElementById('preview');
+    const leftBox = document.getElementById('leftBox');
+
+    preview.src = URL.createObjectURL(event.target.files[0]);
+    previewBox.classList.add('show');
+    leftBox.style.transform = 'translateX(-60px)';
+    leftBox.style.transition = 'transform 0.6s ease';
+  }
+</script>
+</body>
+</html>

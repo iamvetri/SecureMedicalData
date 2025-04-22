@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Login - SASTRA</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+  <style>
+    body {
+      background: linear-gradient(to bottom, #ffffff, #000c2c);
+      font-family: 'Outfit', sans-serif;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      overflow: hidden;
+    }
+
+    #bg-video {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -1;
+      filter: brightness(0.3) contrast(1.2);
+    }
+
+    .box {
+      background: rgba(255, 255, 255, 0.07);
+      padding: 2.5rem;
+      border-radius: 25px;
+      box-shadow: 0 0 25px rgba(0,0,0,0.5);
+      text-align: center;
+      z-index: 2;
+      animation: fadeInUp 1s ease-in-out;
+      width: 90%;
+      max-width: 400px;
+      position: relative;
+    }
+
+    .logo {
+      height: 60px;
+      margin-bottom: 20px;
+      animation: pulse 2s infinite;
+    }
+
+    h2 {
+      font-size: 2rem;
+      background: linear-gradient(90deg, #ffffff, #00A8E8, #1B1464);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 30px;
+    }
+
+    input {
+      padding: 12px;
+      margin: 10px 0;
+      width: 100%;
+      border-radius: 12px;
+      border: none;
+      background: rgba(255, 255, 255, 0.15);
+      color: white;
+      font-size: 1rem;
+    }
+
+    input::placeholder {
+      color: #ccc;
+    }
+
+    button {
+      padding: 12px 28px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #ffffff, #00A8E8);
+      border: none;
+      color: #000c2c;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 12px #63e0ff;
+    }
+
+    .message {
+      margin-top: 1rem;
+      font-size: 0.9rem;
+      color: #ffc107;
+      animation: fadeIn 0.6s ease-in-out;
+    }
+
+    a {
+      display: inline-block;
+      margin-top: 1rem;
+      font-size: 0.9rem;
+      color: #00d8ff;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <video autoplay muted loop id="bg-video">
+    <source src="{{ url_for('static', filename='dna_background.mp4') }}" type="video/mp4">
+  </video>
+
+  <form method="POST" class="box animate__animated animate__fadeInUp">
+    <img src="{{ url_for('static', filename='Shanmugha_Arts,_Science,_Technology_&_Research_Academy.svg.png') }}" class="logo" alt="Logo">
+    <h2>Login to Portal</h2>
+    <input type="text" name="username" placeholder="Username" required><br>
+    <input type="password" name="password" placeholder="Password" required>
+    <button type="submit">Login</button>
+    {% if message %}
+    <div class="message animate__animated animate__shakeX" id="login-message">{{ message }}</div>
+    <script>
+      setTimeout(() => {
+        const msg = document.getElementById('login-message');
+        if (msg) msg.style.opacity = '0';
+      }, 3000);
+    </script>
+    {% endif %}
+    <a href="/register">Don't have an account? Register</a>
+  </form>
+</body>
+</html>
