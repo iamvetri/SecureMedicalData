@@ -1,1 +1,0 @@
-{"admin": {"password": "admin123", "role": "Admin"}, "doctor": {"password": "doc123", "role": "Doctor"}, "researcher": {"password": "res123", "role": "Researcher"}, "Vetri": {"password": "researcher", "role": "Researcher"}, "vetri": {"password": "vetriadmin", "role": "Admin"}, "r": {"password": "r", "role": "Researcher"}, "Vel": {"password": "veldoctor", "role": "Doctor"}}
